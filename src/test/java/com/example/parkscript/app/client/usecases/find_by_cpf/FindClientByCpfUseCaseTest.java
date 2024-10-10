@@ -47,7 +47,7 @@ class FindClientByCpfUseCaseTest {
         );
 
         // Then
-        assertEquals("Client not found", exception.getMessage());
+        assertEquals("Cliente não encontrado", exception.getMessage());
     }
 
     @Test
