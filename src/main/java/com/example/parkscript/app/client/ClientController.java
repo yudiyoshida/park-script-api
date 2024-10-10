@@ -6,10 +6,7 @@ import com.example.parkscript.app.client.usecases.find_by_cpf.dtos.FindClientByC
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/clients")
@@ -17,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ClientController {
     private final FindClientByCpfUseCase findClientByCpfUseCase;
 
-    @GetMapping()
+    @PostMapping()
     public ResponseEntity<ClientDto> findByCpf(@RequestBody @Valid FindClientByCpfInputDto body) {
         var result = this.findClientByCpfUseCase.execute(body.cpf());
 
