@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 public class ClientController {
     private final FindClientByCpfUseCase findClientByCpfUseCase;
 
-    @PostMapping()
+    @PostMapping("/find-by-cpf")
     public ResponseEntity<ClientDto> findByCpf(@RequestBody @Valid FindClientByCpfInputDto body) {
         var result = this.findClientByCpfUseCase.execute(body.cpf());
 
