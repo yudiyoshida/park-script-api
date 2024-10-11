@@ -3,7 +3,7 @@ package com.example.parkscript.app.parking_spot.usecases.list_all;
 import com.example.parkscript.app.parking_spot.domain.entities.ParkingSpotType;
 import com.example.parkscript.app.parking_spot.dtos.ParkingSpotDto;
 import com.example.parkscript.app.parking_spot.domain.entities.ParkingSpot;
-import com.example.parkscript.app.parking_spot.repositories.IParkingSpotRepository;
+import com.example.parkscript.app.parking_spot.repositories.ParkingVehicleRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,7 +20,7 @@ class ListAllParkingSpotUseCaseTest {
     private AutoCloseable closeable;
 
     @Mock
-    private IParkingSpotRepository parkingSpotRepository;
+    private ParkingVehicleRepository parkingSpotRepository;
 
     @InjectMocks
     private ListAllParkingSpotUseCase listAllParkingSpotUseCase;
