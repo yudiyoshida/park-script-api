@@ -2,7 +2,7 @@ package com.example.parkscript.app.vehicle.usecases.find_by_plate;
 
 import com.example.parkscript.app.vehicle.domain.entities.Vehicle;
 import com.example.parkscript.app.vehicle.dtos.VehicleDto;
-import com.example.parkscript.app.vehicle.repositories.IVehicleRepository;
+import com.example.parkscript.app.vehicle.repositories.VehicleRepository;
 import com.example.parkscript.shared.errors.AppException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,13 +14,13 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 
 import java.util.Optional;
-
 import static org.junit.jupiter.api.Assertions.*;
+
 class FindVehicleByPlateUseCaseTest {
     private AutoCloseable closeable;
 
     @Mock
-    private IVehicleRepository vehicleRepository;
+    private VehicleRepository vehicleRepository;
 
     @InjectMocks
     private FindVehicleByPlateUseCase findVehicleByPlateUseCase;
