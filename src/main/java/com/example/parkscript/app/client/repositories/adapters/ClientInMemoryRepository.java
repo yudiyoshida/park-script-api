@@ -13,8 +13,8 @@ public class ClientInMemoryRepository implements IClientRepository {
     private final List<Client> clients = new ArrayList<>();
 
     public ClientInMemoryRepository() {
-        this.clients.add(new Client("John Doe", "12345678901", "(11) 99999-9999"));
-        this.clients.add(new Client("Jane Doe", "10987654321", "(11) 88888-8888"));
+        this.clients.add(new Client("John Doe", "123.456.789-01", "(11) 99999-9999"));
+        this.clients.add(new Client("Jane Doe", "109.876.543-21", "(11) 88888-8888"));
     }
 
     @Override
