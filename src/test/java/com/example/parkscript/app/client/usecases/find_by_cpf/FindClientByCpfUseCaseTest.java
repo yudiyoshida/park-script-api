@@ -2,7 +2,7 @@ package com.example.parkscript.app.client.usecases.find_by_cpf;
 
 import com.example.parkscript.app.client.domain.entities.Client;
 import com.example.parkscript.app.client.dtos.ClientDto;
-import com.example.parkscript.app.client.repositories.IClientRepository;
+import com.example.parkscript.app.client.repositories.ClientRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,7 +20,7 @@ class FindClientByCpfUseCaseTest {
     private AutoCloseable closeable;
 
     @Mock
-    private IClientRepository clientRepository;
+    private ClientRepository clientRepository;
 
     @InjectMocks
     private FindClientByCpfUseCase findClientByCpfUseCase;

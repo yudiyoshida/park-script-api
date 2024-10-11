@@ -3,11 +3,9 @@ package com.example.parkscript.app.client.dtos;
 import com.example.parkscript.app.client.domain.entities.Client;
 import lombok.Getter;
 
-import java.util.UUID;
-
 @Getter
 public class ClientDto {
-    private final UUID id;
+    private final String id;
     private final String name;
     private final String cpf;
     private final String phone;
