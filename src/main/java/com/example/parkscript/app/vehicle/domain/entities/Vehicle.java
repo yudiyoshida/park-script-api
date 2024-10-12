@@ -27,4 +27,11 @@ public class Vehicle {
         this.model = model;
         this.color = color;
     }
+
+    public Vehicle(String id, String plate, String model, String color) {
+        this.id = id;
+        this.plate = plate;
+        this.model = model;
+        this.color = color;
+    }
 }
