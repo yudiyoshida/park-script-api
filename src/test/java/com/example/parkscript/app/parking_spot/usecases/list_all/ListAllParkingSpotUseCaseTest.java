@@ -7,10 +7,8 @@ import com.example.parkscript.app.parking_spot.repositories.ParkingSpotRepositor
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
+import org.mockito.*;
+import org.springframework.data.domain.Sort;
 
 import java.util.List;
 
@@ -39,7 +37,7 @@ class ListAllParkingSpotUseCaseTest {
     void shouldReturnAListOfParkingSpotsDto() {
         // Given
         ParkingSpot parkingSpot = new ParkingSpot("name test", ParkingSpotType.HANDICAPPED, true);
-        Mockito.when(this.parkingSpotRepository.findAll()).thenReturn(List.of(parkingSpot));
+        Mockito.when(this.parkingSpotRepository.findAll(ArgumentMatchers.any(Sort.class))).thenReturn(List.of(parkingSpot));
 
         // When
         var result = this.listAllParkingSpotUseCase.execute();
