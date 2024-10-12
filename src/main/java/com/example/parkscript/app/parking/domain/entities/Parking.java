@@ -2,6 +2,7 @@ package com.example.parkscript.app.parking.domain.entities;
 
 import com.example.parkscript.app.parking_spot.domain.entities.ParkingSpot;
 import com.example.parkscript.app.vehicle.domain.entities.Vehicle;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,12 +24,13 @@ public class Parking {
     @Column(name = "vacated_at")
     private LocalDateTime vacatedAt;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "vehicle_id", nullable = false)
     private Vehicle vehicle;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "parking_spot_id", nullable = false)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private ParkingSpot parkingSpot;
 
     public Parking(Vehicle vehicle, ParkingSpot parkingSpot) {
