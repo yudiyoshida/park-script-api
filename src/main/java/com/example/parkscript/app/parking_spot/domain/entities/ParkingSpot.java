@@ -1,11 +1,8 @@
 package com.example.parkscript.app.parking_spot.domain.entities;
 
-import com.example.parkscript.app.parking.domain.entities.Parking;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.util.Set;
 
 @Entity
 @Table(name = "parking_spots")
@@ -25,9 +22,6 @@ public class ParkingSpot {
 
     @Column(nullable = false)
     private boolean isOccupied;
-
-    @OneToMany(mappedBy = "parkingSpot")
-    private Set<Parking> parkings;
 
     public ParkingSpot(String name, ParkingSpotType type, boolean isOccupied) {
         this.name = name;
