@@ -2,7 +2,6 @@ package com.example.parkscript.app.parking_spot.usecases.park_vehicle;
 
 import com.example.parkscript.app.parking_spot.repositories.ParkingSpotRepository;
 import com.example.parkscript.app.parking_spot.usecases.park_vehicle.dtos.ParkVehicleInputDto;
-import com.example.parkscript.app.vehicle.domain.entities.Vehicle;
 import com.example.parkscript.app.vehicle.repositories.VehicleRepository;
 import com.example.parkscript.shared.errors.AppException;
 import jakarta.transaction.Transactional;
@@ -19,7 +18,7 @@ public class ParkVehicleUseCase {
     private VehicleRepository vehicleRepository;
 
     @Transactional
-    public Vehicle execute(ParkVehicleInputDto data) {
+    public void execute(ParkVehicleInputDto data) {
         // ok: verificar se vaga existe
         // ok: verificar se veículo existe
         // ok: verificar se vaga está livre
@@ -44,12 +43,10 @@ public class ParkVehicleUseCase {
             throw new AppException(HttpStatus.BAD_REQUEST, "Veículo já está estacionado");
         }
 
+        // incrementa 1 ponto no cartão fidelidade do cliente
+
         // atualiza informações da vaga de estacionamento
         parkingSpot.parkVehicle(vehicle);
         this.parkingSpotRepository.save(parkingSpot);
-
-        // incrementa 1 ponto no cartão fidelidade do cliente
-
-        return vehicle;
     }
 }
