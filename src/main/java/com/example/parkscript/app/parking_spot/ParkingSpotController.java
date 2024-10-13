@@ -1,7 +1,7 @@
 package com.example.parkscript.app.parking_spot;
 
-import com.example.parkscript.app.parking_spot.dtos.ParkingSpotDto;
 import com.example.parkscript.app.parking_spot.usecases.list_all.ListAllParkingSpotUseCase;
+import com.example.parkscript.app.parking_spot.usecases.list_all.dtos.ListAllParkingSpotOutputDto;
 import com.example.parkscript.app.parking_spot.usecases.park_vehicle.ParkVehicleUseCase;
 import com.example.parkscript.app.parking_spot.usecases.park_vehicle.dtos.ParkVehicleInputDto;
 import io.swagger.v3.oas.annotations.Operation;
@@ -10,8 +10,6 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/parking-spots")
@@ -23,7 +21,7 @@ public class ParkingSpotController {
 
     @GetMapping()
     @Operation(summary = "Rota para listar todas as vagas de estacionamento ordenadas alfabeticamente pelo nome")
-    public ResponseEntity<List<ParkingSpotDto>> listAll() {
+    public ResponseEntity<ListAllParkingSpotOutputDto> listAll() {
         var result = this.listAllParkingSpotUseCase.execute();
 
         return ResponseEntity.ok(result);
