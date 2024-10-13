@@ -10,5 +10,8 @@ public record CreateVehicleInputDto(
     String color,
 
     @NotBlank(message = "Modelo é um campo obrigatório")
-    String model
+    String model,
+
+    @NotBlank(message = "Id do cliente é um campo obrigatório")
+    String clientId
 ) { }

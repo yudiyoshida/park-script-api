@@ -1,5 +1,7 @@
 package com.example.parkscript.app.vehicle.usecases.create;
 
+import com.example.parkscript.app.client.domain.entities.Client;
+import com.example.parkscript.app.client.repositories.ClientRepository;
 import com.example.parkscript.app.vehicle.domain.entities.Vehicle;
 import com.example.parkscript.app.vehicle.repositories.VehicleRepository;
 import com.example.parkscript.app.vehicle.usecases.create.dtos.CreateVehicleInputDto;
@@ -17,6 +19,9 @@ class CreateVehicleUseCaseTest {
 
     @Mock
     private VehicleRepository vehicleRepository;
+
+    @Mock
+    private ClientRepository clientRepository;
 
     @InjectMocks
     private CreateVehicleUseCase createVehicleUseCase;
@@ -37,14 +42,15 @@ class CreateVehicleUseCaseTest {
         String plate = "ABC-1234";
         String color = "Preto";
         String model = "SUV";
+        String clientId = "c-id";
 
         Mockito.when(this.vehicleRepository.findByPlate(plate)).thenReturn(Optional.empty());
         Mockito.when(this.vehicleRepository.save(ArgumentMatchers.any(Vehicle.class))).thenAnswer(answer -> answer.getArgument(0));
-
+        Mockito.when(this.clientRepository.findById(clientId)).thenReturn(Optional.of(Mockito.mock(Client.class)));
 
         // When
         ArgumentCaptor<Vehicle> captor = ArgumentCaptor.forClass(Vehicle.class);
-        this.createVehicleUseCase.execute(new CreateVehicleInputDto(plate, color, model));
+        this.createVehicleUseCase.execute(new CreateVehicleInputDto(plate, color, model, clientId));
 
         // Then
         Mockito.verify(this.vehicleRepository).save(captor.capture());
@@ -62,15 +68,19 @@ class CreateVehicleUseCaseTest {
         String id = "random-id";
         String plate = "ABC-1234";
         String color = "Preto";
-        String model = "SUV";
+        String clientId = "c-id";
 
-        Vehicle vehicle = new Vehicle(id, plate, model, color);
+        String model = "SUV";
+        Client client = Mockito.mock(Client.class);
+
+        Vehicle vehicle = new Vehicle(id, plate, model, color, client);
         Mockito.when(this.vehicleRepository.findByPlate(plate)).thenReturn(Optional.of(vehicle));
         Mockito.when(this.vehicleRepository.save(ArgumentMatchers.any(Vehicle.class))).thenAnswer(answer -> answer.getArgument(0));
+        Mockito.when(this.clientRepository.findById(clientId)).thenReturn(Optional.of(Mockito.mock(Client.class)));
 
         // When
         ArgumentCaptor<Vehicle> captor = ArgumentCaptor.forClass(Vehicle.class);
-        this.createVehicleUseCase.execute(new CreateVehicleInputDto(plate, color, model));
+        this.createVehicleUseCase.execute(new CreateVehicleInputDto(plate, color, model, clientId));
 
         // Then
         Mockito.verify(this.vehicleRepository).save(captor.capture());

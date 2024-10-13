@@ -1,5 +1,6 @@
 package com.example.parkscript.app.vehicle.usecases.find_by_plate;
 
+import com.example.parkscript.app.client.domain.entities.Client;
 import com.example.parkscript.app.vehicle.domain.entities.Vehicle;
 import com.example.parkscript.app.vehicle.dtos.VehicleDto;
 import com.example.parkscript.app.vehicle.repositories.VehicleRepository;
@@ -50,7 +51,8 @@ class FindVehicleByPlateUseCaseTest {
 
     @Test
     void shouldReturnVehicleDtoWhenVehicleIsFound() {
-        var vehicle = new Vehicle("ABC1234", "Fiat", "Uno");
+        var client = Mockito.mock(Client.class);
+        var vehicle = new Vehicle("ABC1234", "Fiat", "Uno", client);
         Mockito.when(this.vehicleRepository.findByPlate("ABC1234")).thenReturn(Optional.of(vehicle));
 
         var result = this.findVehicleByPlateUseCase.execute("ABC1234");

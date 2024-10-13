@@ -1,8 +1,12 @@
 package com.example.parkscript.app.client.domain.entities;
 
+import com.example.parkscript.app.vehicle.domain.entities.Vehicle;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.Set;
 
 @Entity
 @Table(name = "clients")
@@ -21,6 +25,10 @@ public class Client {
 
     @Column(nullable = false)
     private String phone;
+
+    @OneToMany(mappedBy = "client")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private Set<Vehicle> vehicles;
 
     // creation
     public Client(String name, String cpf, String phone) {

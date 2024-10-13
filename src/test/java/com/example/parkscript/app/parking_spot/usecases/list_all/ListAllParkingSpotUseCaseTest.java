@@ -43,7 +43,7 @@ class ListAllParkingSpotUseCaseTest {
         var result = this.listAllParkingSpotUseCase.execute();
 
         // Then
-        assertThat(result.size()).isEqualTo(1);
-        assertThat(result.get(0)).isInstanceOf(ParkingSpotDto.class);
+        assertThat(result.getParkingSpots().size()).isEqualTo(1);
+        assertThat(result.getParkingSpots().get(0)).isInstanceOf(ParkingSpotDto.class);
     }
 }
