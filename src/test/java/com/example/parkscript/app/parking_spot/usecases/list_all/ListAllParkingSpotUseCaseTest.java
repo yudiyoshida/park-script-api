@@ -36,7 +36,7 @@ class ListAllParkingSpotUseCaseTest {
     @Test
     void shouldReturnAListOfParkingSpotsDto() {
         // Given
-        ParkingSpot parkingSpot = new ParkingSpot("name test", ParkingSpotType.HANDICAPPED, true);
+        ParkingSpot parkingSpot = new ParkingSpot("name test", ParkingSpotType.HANDICAPPED);
         Mockito.when(this.parkingSpotRepository.findAll(ArgumentMatchers.any(Sort.class))).thenReturn(List.of(parkingSpot));
 
         // When

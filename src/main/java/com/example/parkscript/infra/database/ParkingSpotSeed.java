@@ -19,7 +19,7 @@ public class ParkingSpotSeed {
                 String name = i < 10 ? "A0" + i : "A" + i;
                 ParkingSpotType type = i < 3 ? ParkingSpotType.HANDICAPPED : i < 6 ? ParkingSpotType.ELDERLY : ParkingSpotType.NORMAL;
 
-                ParkingSpot parkingSpot = new ParkingSpot(name, type, false);
+                ParkingSpot parkingSpot = new ParkingSpot(name, type);
                 parkingSpotRepository.save(parkingSpot);
             }
 

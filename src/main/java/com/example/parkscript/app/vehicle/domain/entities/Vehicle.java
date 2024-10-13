@@ -1,5 +1,6 @@
 package com.example.parkscript.app.vehicle.domain.entities;
 
+import com.example.parkscript.app.parking_spot.domain.entities.ParkingSpot;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,6 +23,10 @@ public class Vehicle {
     @Column(nullable = false)
     private String color;
 
+    @OneToOne(mappedBy = "vehicle")
+    @JoinColumn(name = "parking_spot_id")
+    private ParkingSpot parkingSpot;
+
     public Vehicle(String plate, String model, String color) {
         this.plate = plate;
         this.model = model;
@@ -33,5 +38,9 @@ public class Vehicle {
         this.plate = plate;
         this.model = model;
         this.color = color;
+    }
+
+    public boolean isParked() {
+        return this.parkingSpot != null;
     }
 }

@@ -1,8 +1,11 @@
 package com.example.parkscript.app.parking_spot.domain.entities;
 
+import com.example.parkscript.app.vehicle.domain.entities.Vehicle;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "parking_spots")
@@ -20,16 +23,23 @@ public class ParkingSpot {
     @Enumerated(EnumType.STRING)
     private ParkingSpotType type;
 
-    @Column(nullable = false)
-    private boolean isOccupied;
+    @OneToOne
+    private Vehicle vehicle;
 
-    public ParkingSpot(String name, ParkingSpotType type, boolean isOccupied) {
+    @Column(nullable = true)
+    private LocalDateTime occupiedAt;
+
+    public ParkingSpot(String name, ParkingSpotType type) {
         this.name = name;
         this.type = type;
-        this.isOccupied = isOccupied;
     }
 
-    public void parkVehicle() {
-        this.isOccupied = true;
+    public boolean isOccupied() {
+        return this.vehicle != null;
+    }
+
+    public void parkVehicle(Vehicle vehicle) {
+        this.vehicle = vehicle;
+        this.occupiedAt = LocalDateTime.now();
     }
 }
