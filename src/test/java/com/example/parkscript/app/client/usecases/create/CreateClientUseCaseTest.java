@@ -39,9 +39,7 @@ class CreateClientUseCaseTest {
         String phone = "00123456789";
 
         Mockito.when(this.clientRepository.findByCpf(cpf)).thenReturn(Optional.empty());
-        Mockito.when(this.clientRepository.save(ArgumentMatchers.any(Client.class))).thenAnswer(invocation -> {
-            return invocation.getArgument(0);
-        });
+        Mockito.when(this.clientRepository.save(ArgumentMatchers.any(Client.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
         // When
         ArgumentCaptor<Client> clientCaptor = ArgumentCaptor.forClass(Client.class);
@@ -60,11 +58,12 @@ class CreateClientUseCaseTest {
     @Test
     void shouldUpdateClientWhenIsFoundByCpf() {
         // Given
+        String clientId = "c-id";
         String name = "Fulano";
         String cpf = "12345678909";
         String phone = "00123456789";
 
-        Client client = new Client("1", name, cpf, phone);
+        Client client = new Client(clientId, name, cpf, phone);
         Mockito.when(this.clientRepository.findByCpf(cpf)).thenReturn(Optional.of(client));
         Mockito.when(this.clientRepository.save(ArgumentMatchers.any(Client.class))).thenAnswer(invocation -> {
             return invocation.getArgument(0);
@@ -78,7 +77,7 @@ class CreateClientUseCaseTest {
         Mockito.verify(this.clientRepository).save(clientCaptor.capture());
 
         Client updatedClient = clientCaptor.getValue();
-        assertEquals("1", updatedClient.getId());
+        assertEquals(clientId, updatedClient.getId());
         assertEquals(name, updatedClient.getName());
         assertEquals(cpf, updatedClient.getCpf());
         assertEquals(phone, updatedClient.getPhone());
