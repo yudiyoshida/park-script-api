@@ -42,4 +42,9 @@ public class ParkingSpot {
         this.vehicle = vehicle;
         this.occupiedAt = LocalDateTime.now();
     }
+
+    public void releaseVehicle() {
+        this.vehicle = null;
+        this.occupiedAt = null;
+    }
 }

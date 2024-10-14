@@ -4,6 +4,9 @@ import com.example.parkscript.app.parking_spot.usecases.list_all.ListAllParkingS
 import com.example.parkscript.app.parking_spot.usecases.list_all.dtos.ListAllParkingSpotOutputDto;
 import com.example.parkscript.app.parking_spot.usecases.park_vehicle.ParkVehicleUseCase;
 import com.example.parkscript.app.parking_spot.usecases.park_vehicle.dtos.ParkVehicleInputDto;
+import com.example.parkscript.app.parking_spot.usecases.release_vehicle.ReleaseVehicleUseCase;
+import com.example.parkscript.app.parking_spot.usecases.release_vehicle.dtos.ReleaseVehicleInputDto;
+import com.example.parkscript.shared.dtos.SuccessMessage;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -18,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 public class ParkingSpotController {
     private final ListAllParkingSpotUseCase listAllParkingSpotUseCase;
     private final ParkVehicleUseCase parkVehicleUseCase;
+    private final ReleaseVehicleUseCase releaseVehicleUseCase;
 
     @GetMapping()
     @Operation(summary = "Rota para listar todas as vagas de estacionamento ordenadas alfabeticamente pelo nome")
@@ -29,9 +33,17 @@ public class ParkingSpotController {
 
     @PostMapping("/park")
     @Operation(summary = "Rota para estacionar um veículo em uma vaga")
-    public ResponseEntity<Void> parkVehicle(@RequestBody @Valid ParkVehicleInputDto body) {
+    public ResponseEntity<SuccessMessage> parkVehicle(@RequestBody @Valid ParkVehicleInputDto body) {
         this.parkVehicleUseCase.execute(body);
 
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok().body(new SuccessMessage("Veículo estacionado com sucesso!"));
+    }
+
+    @PostMapping("/release")
+    @Operation(summary = "Rota para retirar um veículo de uma vaga")
+    public ResponseEntity<SuccessMessage> releaseVehicle(@RequestBody @Valid ReleaseVehicleInputDto body) {
+        this.releaseVehicleUseCase.execute(body);
+
+        return ResponseEntity.ok().body(new SuccessMessage("Veículo removido com sucesso!"));
     }
 }
