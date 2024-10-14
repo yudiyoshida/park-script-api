@@ -1,5 +1,7 @@
 package com.example.parkscript.app.parking_spot.usecases.release_vehicle;
 
+import com.example.parkscript.app.client.domain.entities.Client;
+import com.example.parkscript.app.parking.repositories.ParkingRepository;
 import com.example.parkscript.app.parking_spot.domain.entities.ParkingSpot;
 import com.example.parkscript.app.parking_spot.domain.entities.ParkingSpotType;
 import com.example.parkscript.app.parking_spot.repositories.ParkingSpotRepository;
@@ -20,6 +22,9 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class ReleaseVehicleUseCaseTest {
     private AutoCloseable closeable;
+
+    @Mock
+    private ParkingRepository parkingRepository;
 
     @Mock
     private ParkingSpotRepository parkingSpotRepository;
@@ -64,7 +69,8 @@ class ReleaseVehicleUseCaseTest {
 
     @Test
     void shouldReleaseTheParkingSpot() {
-        var vehicle = Mockito.mock(Vehicle.class);
+        var client = Mockito.mock(Client.class);
+        var vehicle = new Vehicle("abc-1234", "Fiat", "Uno", client);
         var parkingSpot = new ParkingSpot("A1", ParkingSpotType.HANDICAPPED);
         parkingSpot.parkVehicle(vehicle);
 
@@ -78,5 +84,18 @@ class ReleaseVehicleUseCaseTest {
         var arguments = argCaptor.getValue();
         assertThat(arguments.getVehicle()).isNull();
         assertThat(arguments.getOccupiedAt()).isNull();
+    }
+
+    @Test
+    void shouldRegisterTheParking() {
+        var client = Mockito.mock(Client.class);
+        var vehicle = new Vehicle("abc-1234", "Fiat", "Uno", client);
+        var parkingSpot = new ParkingSpot("A1", ParkingSpotType.HANDICAPPED);
+        parkingSpot.parkVehicle(vehicle);
+
+        Mockito.when(this.parkingSpotRepository.findById("id")).thenReturn(Optional.of(parkingSpot));
+
+        this.releaseVehicleUseCase.execute(new ReleaseVehicleInputDto("id"));
+        Mockito.verify(this.parkingRepository, Mockito.times(1)).save(ArgumentMatchers.any());
     }
 }
