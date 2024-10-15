@@ -20,8 +20,7 @@ public class CreateClientUseCase {
                 clientAlreadyExists.get().getId(),
                 inputDto.name(),
                 clientAlreadyExists.get().getCpf(),
-                inputDto.phone(),
-                clientAlreadyExists.get().getLoyaltyCardPoints()
+                inputDto.phone()
             )
             : new Client(
                 inputDto.name(),

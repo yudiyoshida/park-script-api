@@ -1,5 +1,7 @@
 package com.example.parkscript.app.parking_spot;
 
+import com.example.parkscript.app.parking_spot.usecases.calculate_amount.CalculateAmountUseCase;
+import com.example.parkscript.app.parking_spot.usecases.calculate_amount.dtos.CalculateAmountOutputDto;
 import com.example.parkscript.app.parking_spot.usecases.list_all.ListAllParkingSpotUseCase;
 import com.example.parkscript.app.parking_spot.usecases.list_all.dtos.ListAllParkingSpotOutputDto;
 import com.example.parkscript.app.parking_spot.usecases.park_vehicle.ParkVehicleUseCase;
@@ -22,6 +24,7 @@ public class ParkingSpotController {
     private final ListAllParkingSpotUseCase listAllParkingSpotUseCase;
     private final ParkVehicleUseCase parkVehicleUseCase;
     private final ReleaseVehicleUseCase releaseVehicleUseCase;
+    private final CalculateAmountUseCase calculateAmountUseCase;
 
     @GetMapping()
     @Operation(summary = "Rota para listar todas as vagas de estacionamento ordenadas alfabeticamente pelo nome")
@@ -45,5 +48,13 @@ public class ParkingSpotController {
         this.releaseVehicleUseCase.execute(body);
 
         return ResponseEntity.ok().body(new SuccessMessage("Veículo removido com sucesso!"));
+    }
+
+    @GetMapping("{id}/amount")
+    @Operation(summary = "Rota para obter o valor a ser pago por uma vaga de estacionamento")
+    public ResponseEntity<CalculateAmountOutputDto> calculateAmount(@PathVariable String id) {
+        var result = this.calculateAmountUseCase.execute(id);
+
+        return ResponseEntity.ok(result);
     }
 }

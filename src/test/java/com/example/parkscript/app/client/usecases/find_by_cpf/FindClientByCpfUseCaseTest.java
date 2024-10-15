@@ -3,6 +3,7 @@ package com.example.parkscript.app.client.usecases.find_by_cpf;
 import com.example.parkscript.app.client.domain.entities.Client;
 import com.example.parkscript.app.client.dtos.ClientDto;
 import com.example.parkscript.app.client.repositories.ClientRepository;
+import com.example.parkscript.shared.errors.AppException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -38,16 +39,16 @@ class FindClientByCpfUseCaseTest {
     @Test
     void shouldThrowAnErrorWhenClientIsNotFound() {
         // Given
-        Mockito.when(this.clientRepository.findByCpf("")).thenReturn(Optional.empty());
+        String cpf = "12345678909";
+        Mockito.when(this.clientRepository.findByCpf(cpf)).thenReturn(Optional.empty());
 
         // When
-        var exception = assertThrows(
-            RuntimeException.class,
-            () -> this.findClientByCpfUseCase.execute("")
-        );
+        var ex = assertThrows(AppException.class, () -> {
+            this.findClientByCpfUseCase.execute(cpf);
+        });
 
         // Then
-        assertEquals("Cliente não encontrado", exception.getMessage());
+        assertEquals("Cliente não encontrado", ex.getMessage());
     }
 
     @Test

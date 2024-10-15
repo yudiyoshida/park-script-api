@@ -39,7 +39,9 @@ class CreateClientUseCaseTest {
         String phone = "00123456789";
 
         Mockito.when(this.clientRepository.findByCpf(cpf)).thenReturn(Optional.empty());
-        Mockito.when(this.clientRepository.save(ArgumentMatchers.any(Client.class))).thenAnswer(invocation -> invocation.getArgument(0));
+        Mockito.when(this.clientRepository.save(ArgumentMatchers.any(Client.class))).thenAnswer(invocation -> {
+            return invocation.getArgument(0);
+        });
 
         // When
         ArgumentCaptor<Client> clientCaptor = ArgumentCaptor.forClass(Client.class);

@@ -39,11 +39,6 @@ public class ParkVehicleUseCase {
             throw new AppException(HttpStatus.BAD_REQUEST, "Veículo já está estacionado");
         }
 
-        // incrementa 1 ponto no cartão fidelidade do cliente
-        var client = vehicle.getClient();
-        client.incrementLoyaltyCardPoints();
-        this.clientRepository.save(client);
-
         // atualiza informações da vaga de estacionamento
         parkingSpot.parkVehicle(vehicle);
         this.parkingSpotRepository.save(parkingSpot);

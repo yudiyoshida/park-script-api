@@ -45,7 +45,7 @@ public class Parking {
         this.amount = this.calculateAmount();
     }
 
-    private Double calculateAmount() {
+    public Double calculateAmount() {
         var hours = this.startTime.until(this.finalTime, ChronoUnit.HOURS);
 
         if (hours == 0) {

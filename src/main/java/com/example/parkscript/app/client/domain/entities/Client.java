@@ -26,9 +26,6 @@ public class Client {
     @Column(nullable = false)
     private String phone;
 
-    @Column(nullable = false)
-    private int loyaltyCardPoints;
-
     @OneToMany(mappedBy = "client")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Set<Vehicle> vehicles;
@@ -38,19 +35,13 @@ public class Client {
         this.name = name;
         this.cpf = cpf;
         this.phone = phone;
-        this.loyaltyCardPoints = 0;
     }
 
     // restituition
-    public Client(String id, String name, String cpf, String phone, int loyaltyCardPoints) {
+    public Client(String id, String name, String cpf, String phone) {
         this.id = id;
         this.name = name;
         this.cpf = cpf;
         this.phone = phone;
-        this.loyaltyCardPoints = loyaltyCardPoints;
-    }
-
-    public void incrementLoyaltyCardPoints() {
-        this.loyaltyCardPoints++;
     }
 }
