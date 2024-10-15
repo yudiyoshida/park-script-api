@@ -1,5 +1,6 @@
 package com.example.parkscript.app.parking_spot.usecases.park_vehicle;
 
+import com.example.parkscript.app.client.repositories.ClientRepository;
 import com.example.parkscript.app.parking_spot.repositories.ParkingSpotRepository;
 import com.example.parkscript.app.parking_spot.usecases.park_vehicle.dtos.ParkVehicleInputDto;
 import com.example.parkscript.app.vehicle.repositories.VehicleRepository;
@@ -17,16 +18,11 @@ public class ParkVehicleUseCase {
     @Autowired
     private VehicleRepository vehicleRepository;
 
+    @Autowired
+    private ClientRepository clientRepository;
+
     @Transactional
     public void execute(ParkVehicleInputDto data) {
-        // ok: verificar se vaga existe
-        // ok: verificar se veículo existe
-        // ok: verificar se vaga está livre
-        // ok: verificar se veículo está estacionado
-        // ok: atualizar status da vaga
-        // TODO: adicionar 1 ponto no plano fidelidade do cliente
-        // TODO: retornar mensagem de sucesso
-
         var vehicle = this.vehicleRepository
                 .findById(data.vehicleId())
                 .orElseThrow(() -> new AppException(HttpStatus.NOT_FOUND, "Veículo não encontrado"));
@@ -44,6 +40,9 @@ public class ParkVehicleUseCase {
         }
 
         // incrementa 1 ponto no cartão fidelidade do cliente
+        var client = vehicle.getClient();
+        client.incrementLoyaltyCardPoints();
+        this.clientRepository.save(client);
 
         // atualiza informações da vaga de estacionamento
         parkingSpot.parkVehicle(vehicle);
